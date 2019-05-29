@@ -3,7 +3,7 @@ LLVM_LINK=llvm-link
 SAW=saw
 LSS=lss
 CFLAG=-emit-llvm
-LLVM_VERIFIER=/home/bindon/cryptol/llvm-verifier/sym-api
+LLVM_VERIFIER=/llvm-verifier/sym-api
 
 OBJS = DES_core.o DES_wrap.o
 
@@ -23,7 +23,7 @@ DES_imp.bc: $(OBJS)
 
 DES_imp.aig: DES_imp.bc
 	@echo "[+] Generate AIG File: $@"
-	@time lss $<
+	@lss $<
 	@echo ""
 
 verify: DES_imp.aig

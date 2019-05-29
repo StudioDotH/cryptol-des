@@ -9,13 +9,13 @@
 #include <math.h>
 #include "DES_core.h"
 
-void setB(int &i, int in, int loc) {
+void setB(int *i, int in, int loc) {
     int hl=0;
     hl=1<<31-(loc-1);
     if (in)
-        i=i|hl;
+        (*i)=(*i)|hl;
     else
-        i=i&~hl;
+        (*i)=(*i)&~hl;
 }
 
 int getB(int i ,int loc){
@@ -33,116 +33,116 @@ int getV(int in,int b,int e){
     return sum;
 }
 
-void pKEY(int &l,int &r){
+void pKEY(int *l,int *r){
     int map[56]={57,49,41,33,25,17,9,1,58,50,42,34,26,18,10,2,59,51,43,35,27,19,11,3,60,52,44,36,63,55,47,39,31,23,15,7,62,54,46,38,30,22,14,6,61,53,45,37,29,21,13,5,28,20,12,4};
-    int hl=l;
-    int hr=r;
+    int hl=*l;
+    int hr=*r;
     for (int t=0;t<56;t++){
         if (map[t]>32){
             if (t>27){
-                setB(hr,getB(r,map[t]-32),t-27);
+                setB(&hr,getB(*r,map[t]-32),t-27);
             }
             else{
-                setB(hl,getB(r,map[t]-32),t+1);
+                setB(&hl,getB(*r,map[t]-32),t+1);
             }
         }
         else{
             if (t>27){
-                setB(hr,getB(l,map[t]),t-27);
+                setB(&hr,getB(*l,map[t]),t-27);
             }
             else{
-                setB(hl,getB(l,map[t]),t+1);
+                setB(&hl,getB(*l,map[t]),t+1);
             }
         }
         
     }
-    r=hr;
-    l=hl;
+    *r=hr;
+    *l=hl;
     
-    r=r>>4;
-    r=r<<4;
-    l=l>>4;
-    l=l<<4;
+    *r=*r>>4;
+    *r=*r<<4;
+    *l=*l>>4;
+    *l=*l<<4;
 }
 
-void pSUBKEY(int &l,int &r){
+void pSUBKEY(int *l,int *r){
     int map[48]={14,17,11,24,1,5,3,28,15,6,21,10,23,19,12,4,26,8,16,7,27,20,13,2,41,52,31,37,47,55,30,40,51,45,33,48,44,49,39,56,34,53,46,42,50,36,29,32
     };
-    int hl=l;
-    int hr=r;
+    int hl=*l;
+    int hr=*r;
     for (int t=0;t<48;t++){
         if (map[t]>28){
             if (t>23){
-                setB(hr,getB(r,map[t]-28),t-23);
+                setB(&hr,getB(*r,map[t]-28),t-23);
             }
             else{
-                setB(hl,getB(r,map[t]-28),t+1);
+                setB(&hl,getB(*r,map[t]-28),t+1);
             }
         }
         else{
             if (t>23){
-                setB(hr,getB(l,map[t]),t-23);
+                setB(&hr,getB(*l,map[t]),t-23);
             }
             else{
-                setB(hl,getB(l,map[t]),t+1);
+                setB(&hl,getB(*l,map[t]),t+1);
             }
         }
         
     }
-    r=hr;
-    l=hl;
+    *r=hr;
+    *l=hl;
     
-    r=r>>8;
-    r=r<<8;
-    l=l>>8;
-    l=l<<8;
+    *r=*r>>8;
+    *r=*r<<8;
+    *l=*l>>8;
+    *l=*l<<8;
 }
 
-void pIP(int &l,int &r){
+void pIP(int *l,int *r){
     int map[64]={58,50,42,34,26,18,10,2,60,52,44,36,28,20,12,4,62,54,46,38,30,22,14,6,64,56,48,40,32,24,16,8,57,49,41,33,25,17,9,1,59,51,43,35,27,19,11,3,61,53,45,37,29,21,13,5,63,55,47,39,31,23,15,7};
-    int hl=l;
-    int hr=r;
+    int hl=*l;
+    int hr=*r;
     for (int t=0;t<64;t++){
         if (map[t]>32){
             if (t>31){
-                setB(hr,getB(r,map[t]-32),t-31);
+                setB(&hr,getB(*r,map[t]-32),t-31);
             }
             else{
-                setB(hl,getB(r,map[t]-32),t+1);
+                setB(&hl,getB(*r,map[t]-32),t+1);
             }
         }
         else{
             if (t>31){
-                setB(hr,getB(l,map[t]),t-31);
+                setB(&hr,getB(*l,map[t]),t-31);
             }
             else{
-                setB(hl,getB(l,map[t]),t+1);
+                setB(&hl,getB(*l,map[t]),t+1);
             }
         }
         
     }
-    r=hr;
-    l=hl;
+    *r=hr;
+    *l=hl;
 }
-void funcE(int &l,int &r){
+void funcE(int *l,int *r){
     int map[48]={32,1,2,3,4,5,4,5,6,7,8,9,8,9,10,11,12,13,12,13,14,15,16,17,16,17,18,19,20,21,20,21,22,23,24,25,24,25,26,27,28,29,28,29,30,31,32,1};
-    int hl=l;
-    int hr=r;
+    int hl=*l;
+    int hr=*r;
     for (int t=0;t<48;t++){
         if (t>23){
-            setB(hr,getB(r,map[t]),t-23);
+            setB(&hr,getB(*r,map[t]),t-23);
         }
         else{
-            setB(hl,getB(r,map[t]),t+1);
+            setB(&hl,getB(*r,map[t]),t+1);
         }
     }
-    r=hr;
-    l=hl;
+    *r=hr;
+    *l=hl;
     
-    r=r>>8;
-    r=r<<8;
-    l=l>>8;
-    l=l<<8;
+    *r=*r>>8;
+    *r=*r<<8;
+    *l=*l>>8;
+    *l=*l<<8;
 }
 int funcS(int num,int row,int column){\
     int S[512]={14,4,13,1,2,15,11,8,3,10,6,12,5,9,0,7,
@@ -181,46 +181,46 @@ int funcS(int num,int row,int column){\
     return 0;
 }
 
-void finalP(int &l,int &r){
+void finalP(int *l,int *r){
     int map[64]={40,8,48,16,56,24,64,32,39,7,47,15,55,23,63,31,38,6,46,14,54,22,62,30,37,5,45,13,53,21,61,29,36,4,44,12,52,20,60,28,35,3,43,11,51,19,59,27,34,2,42,10,50,18,58,26,33,1,41,9,49,17,57,25};
-    int hl=l;
-    int hr=r;
+    int hl=*l;
+    int hr=*r;
     for (int t=0;t<64;t++){
         if (map[t]>32){
             if (t>31){
-                setB(hr,getB(r,map[t]-32),t-31);
+                setB(&hr,getB(*r,map[t]-32),t-31);
             }
             else{
-                setB(hl,getB(r,map[t]-32),t+1);
+                setB(&hl,getB(*r,map[t]-32),t+1);
             }
         }
         else{
             if (t>31){
-                setB(hr,getB(l,map[t]),t-31);
+                setB(&hr,getB(*l,map[t]),t-31);
             }
             else{
-                setB(hl,getB(l,map[t]),t+1);
+                setB(&hl,getB(*l,map[t]),t+1);
             }
         }
         
     }
-    r=hr;
-    l=hl;
+    *r=hr;
+    *l=hl;
 }
 
 int lastP(int s){
     int map[32]={16,7,20,21,29,12,28,17,1,15,23,26,5,18,31,10,2,8,24,14,32,27,3,9,19,13,30,6,22,11,4,25};
     int ss=0;
     for (int t=0;t<32;t++){
-        setB(ss,getB(s,map[t]),t+1);
+        setB(&ss,getB(s,map[t]),t+1);
     }
     return ss;
 }
 
 
-int  funcF(int r,int kl,int kr){
+int funcF(int r,int kl,int kr){
     int er=r,el=0;
-    funcE(el,er);
+    funcE(&el,&er);
     kl=kl^el;
     kr=kr^er;
     int b=0;
@@ -259,13 +259,13 @@ ULL Cipher(ULL msg,ULL key){
     int keyr=(int)(key);
     int keyl=(int)(key>>32);
     int c0=0,d0=0;
-    pKEY(keyl,keyr);
+    pKEY(&keyl,&keyr);
     c0=keyl;
     d0=keyr;
     int kl=0,kr=0;
     int r0=(int)(msg);
     int l0=(int)(msg>>32);
-    pIP(l0,r0);
+    pIP(&l0,&r0);
     for (int i=1;i<17;i++){
         int t=2;
         if (i==1||i==2||i==9||i==16){
@@ -275,7 +275,7 @@ ULL Cipher(ULL msg,ULL key){
         d0=shiftL(d0,28,t);
         kl=c0;
         kr=d0;
-        pSUBKEY(kl,kr);
+        pSUBKEY(&kl,&kr);
         int pl0=l0;
         l0=r0;
         r0=pl0^funcF(r0,kl,kr);
@@ -286,7 +286,7 @@ ULL Cipher(ULL msg,ULL key){
     rt=r0;
     r0=l0;
     l0=rt;
-    finalP(l0,r0);
+    finalP(&l0,&r0);
     ULL final=l0;
     final=final<<32;
     final+=r0;
@@ -306,18 +306,18 @@ void LLtoByteArray(UCHAR* dst, ULL src) {
     }
 }
 
-void DESEncryption(UCHAR plainText[8], UCHAR cipherText[8], UCHAR keyText[8]) {
+void DESEncryption(UCHAR plainText[8], const UCHAR cipherText[8], const UCHAR keyText[8]) {
     ULL msg=byteArrayToLL(plainText);
     ULL key=byteArrayToLL(keyText);
     ULL ret=Cipher(msg, key);
     LLtoByteArray(cipherText, ret);
 }
 
-int main() {
-    // TEST CODE
-    auto cipherText = (UCHAR*)malloc(8*sizeof(UCHAR));
-    LLtoByteArray(cipherText, Cipher(0x1234567812345678, 0x1234567812345678));
-    for(int i=0;i<8;i++) {
-        printf("%02X ", cipherText[i]);
-    }
-}
+// int main() {
+//     // TEST CODE
+//     auto cipherText = (UCHAR*)malloc(8*sizeof(UCHAR));
+//     LLtoByteArray(cipherText, Cipher(0x1234567812345678, 0x1234567812345678));
+//     for(int i=0;i<8;i++) {
+//         printf("%02X ", cipherText[i]);
+//     }
+// }
