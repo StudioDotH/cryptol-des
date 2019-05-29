@@ -13,6 +13,12 @@ ENV PATH="/cryptol-2.7.0-Ubuntu14.04-64/bin:${PATH}"
 
 RUN git clone https://github.com/GaloisInc/llvm-verifier
 
+RUN apt-get install -y unzip
+RUN wget -O z3.zip https://github.com/Z3Prover/z3/releases/download/z3-4.7.1/z3-4.7.1-x64-ubuntu-14.04.zip
+RUN unzip z3.zip
+ENV PATH="/z3-4.7.1-x64-ubuntu-14.04/bin:${PATH}"
+
 COPY DES /DES
+COPY ARIA /ARIA
 
 # RUN cd DES/sample && make
