@@ -3,7 +3,7 @@ LLVM_LINK=llvm-link
 SAW=saw
 LSS=lss
 CFLAG=-emit-llvm
-LLVM_VERIFIER=/home/bindon/cryptol/llvm-verifier/sym-api
+LLVM_VERIFIER=/llvm-verifier/sym-api
 
 OBJS = ARIA_core.o ARIA_wrap.o
 

@@ -1,5 +1,4 @@
 #include "DES_core.h"
-#include <stdlib.h>
 #include <sym-api.h>
 
 void encrypt(unsigned char *plainText, unsigned char *cipherText, unsigned char *key) {

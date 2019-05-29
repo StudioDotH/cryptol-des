@@ -1,0 +1,20 @@
+import "../DES.cry";
+
+let {{
+  desExtract x = encrypt (Msg, Key)
+    where [Msg, Key] = split x
+}};
+
+print "[+] Loading DES Implementation Model";
+des_imp <- time (load_aig "DES_imp.aig");
+
+print "[+] Loading DES Reference Implementation Model";
+des_ref <- time (bitblast {{ desExtract }});
+
+print "[*] Checking Equivalence (may take about an hour): ";
+res <- time (cec des_imp des_ref);
+print res;
+
+print "[+] Writing reference AIG";
+time (write_aig "../DES_ref.aig" {{ desExtract }});
+
