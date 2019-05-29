@@ -15,7 +15,7 @@ IP = [
     63,  55,  47,  39,  31,  23,  15,  7, 
     56,  48,  40,  32,  24,  16,   8,  0, 
     58,  50,  42,  34,  26,  18,  10,  2, 
-    60,  52,  44,  36,  29,  20,  12,  4, 
+    60,  52,  44,  36,  28,  20,  12,  4, 
     62,  54,  46,  38,  30,  22,  14,  6
 ]
 
@@ -149,6 +149,7 @@ keyShift (index, keys) = [
 ]
 
 
+// keyGenAll : [2][28] -> [16][48]
 keyGenAll : [2][28] -> [16][48]
 keyGenAll (keys) = ret
     where
@@ -158,6 +159,7 @@ keyGenAll (keys) = ret
             | i <- [0 .. 15]
         ]
         ret = [keyGen(K) | K <- cd] @@ [1 .. 16]
+
 
 // f(R, K)
 fFuncE : [32] -> [48]
@@ -194,7 +196,7 @@ initPerm : [64] -> [2][32]
 initPerm (value) = split`{2} (value @@ IP)
 
 
-// Main Encryption
+// Main Encryption (L, R)
 encStep : ([2][32], [48]) -> [2][32]
 encStep (MsgPair, Key) = [
     MsgPair @ 1,
@@ -212,4 +214,3 @@ encrypt (Msg, Key) = Res
         L16 = (encSteps ! 0) @ 0
 
         Res = join([R16, L16]) @@ IPInv
-
