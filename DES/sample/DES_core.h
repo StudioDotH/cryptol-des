@@ -1,4 +1,5 @@
-#define UNCHAR unsigned char
+#define UCHAR unsigned char
+#define ULL unsigned long long int
 
-void ARIAEncryption(UNCHAR plainText[64], const UNCHAR cipherText[64], const UNCHAR key[64]);
+void DESEncryption(UCHAR plainText[8], UCHAR cipherText[8], UCHAR keyText[8]);
 
